@@ -14,15 +14,15 @@ class TimeDilation:
     
     def dilationFactor(self):
         if self.distance <= self.criticalDistance():
-            return "ERROR: Critical distance has reached."
+            return ValueError
         else:
             return math.sqrt(1 - (2 * self.G * self.mass) / (self.c ** 2 * self.distance))
     
     def relativeTime(self):
+        dilationFactor = self.dilationFactor()
+        if dilationFactor == ValueError:
+            return "ERROR: Critical distance has been reached."
         relativeTime = self.time * self.dilationFactor()
         return relativeTime
 
 
-# FUNCIONA: print(TimeDilation(3600, 5e6, 4e30).relativeTime())
-# FUNCIONA: print(TimeDilation(0, 5e6, 4e30).dilationFactor())
-# FUNCIONA: print(TimeDilation(3600, 5e2, 4e30).criticalDistance())
